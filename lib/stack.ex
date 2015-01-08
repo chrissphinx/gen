@@ -19,12 +19,12 @@ defmodule Stack do
     {:reply, h, t}
   end
 
-  def handle_call(msg, from, state) do
-    super(msg, from, state)
+  def handle_call({:push, item}, _from, state) do
+    {:reply, :ok, [item|state]}
   end
 
-  def handle_call({:push, item}, state) do
-    {:reply, :ok, [item|state]}
+  def handle_call(msg, from, state) do
+    super(msg, from, state)
   end
 
   def handle_cast(msg, state) do
