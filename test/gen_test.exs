@@ -14,6 +14,7 @@ defmodule GenTest do
     assert elem(Stack.Supervisor.create(2, [1]), 0) == :ok
     assert Stack.pop(2) == 1
     assert catch_exit(Stack.pop(2))
+    Task.await(Task.async(fn -> Stream.timer(500) |> Enum.to_list end), 5000)
     assert Stack.pop(2) == 1
   end
 end

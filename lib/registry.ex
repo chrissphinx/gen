@@ -15,7 +15,7 @@ defmodule Stack.Registry do
   end
 
   def unregister_name(name) do
-
+    
   end
 
   def send(name, msg) do

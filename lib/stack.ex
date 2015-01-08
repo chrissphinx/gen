@@ -7,7 +7,7 @@ defmodule Stack do
   end
 
   def push(id, item) do
-    GenServer.cast({:via, Stack.Registry, id}, {:push, item})
+    GenServer.call({:via, Stack.Registry, id}, {:push, item})
   end
 
   def pop(id) do
@@ -23,8 +23,8 @@ defmodule Stack do
     super(msg, from, state)
   end
 
-  def handle_cast({:push, item}, state) do
-    {:noreply, [item|state]}
+  def handle_call({:push, item}, state) do
+    {:reply, :ok, [item|state]}
   end
 
   def handle_cast(msg, state) do
