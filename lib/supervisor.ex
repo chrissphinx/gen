@@ -1,18 +1,19 @@
-defmodule Stack.Supervisor do
+defmodule Gen.Supervisor do
   use Supervisor
 
-  def start_link() do
-    Supervisor.start_link(__MODULE__, [], name: __MODULE__)
-  end
+  @self __MODULE__
+  @registry Stack.Registry
+  @supervisor Stack.Supervisor
 
-  def create(id, default \\ []) do
-    Supervisor.start_child(__MODULE__, [id, default])
+  def start_link() do
+    Supervisor.start_link(@self, [], name: @self)
   end
 
   def init([]) do
-    child_type = [
-      worker(Stack, [])
+    children = [
+      supervisor(@supervisor, []),
+      worker(@registry, [])
     ]
-    supervise(child_type, strategy: :simple_one_for_one)
+    supervise(children, strategy: :one_for_one)
   end
 end
